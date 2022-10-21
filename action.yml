@@ -1,6 +1,16 @@
 name: Codemagic Build
 description: Start a build on Codemagic from GitHub Actions
 
+inputs:
+  app-id:
+    description: Application ID
+    required: true
+  workflow-id:
+    description: Workflow ID
+    required: true
+outputs:
+  build-id:
+    description: Started build ID
 runs:
   using: node16
   main: index.js
