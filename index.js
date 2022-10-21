@@ -6,7 +6,7 @@ try {
     const workflowId = core.getInput('workflow-id')
     console.log(`workflow_id: ${workflowId}`)
     const token = core.getInput('token')
-    console.log('Token', !!token)
+    console.log(`token: ${!!token}`)
     core.setOutput('build-id', 'test-build-id')
 } catch (error) {
     core.setFailed(error.message)
