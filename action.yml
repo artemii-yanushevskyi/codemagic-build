@@ -8,6 +8,9 @@ inputs:
   workflow-id:
     description: Workflow ID
     required: true
+  token:
+    required: true
+    description: Codemagic API token (from User settings)
 outputs:
   build-id:
     description: Started build ID
