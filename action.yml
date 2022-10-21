@@ -1,0 +1,7 @@
+name: Codemagic Build
+description: Start a build on Codemagic from GitHub Actions
+
+runs:
+  using: node16
+  main: index.js
+
