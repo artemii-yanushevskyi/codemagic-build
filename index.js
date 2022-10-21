@@ -1,14 +1,37 @@
-const core = require('@actions/core')
+import axios from 'axios'
 
-try {
-    const appId = core.getInput('app-id')
-    console.log(`app_id: ${appId}`)
-    const workflowId = core.getInput('workflow-id')
-    console.log(`workflow_id: ${workflowId}`)
-    const token = core.getInput('token')
-    console.log(`token: ${!!token}`)
-    core.setOutput('build-id', 'test-build-id')
-} catch (error) {
-    core.setFailed(error.message)
+import {
+    getInput,
+    setOutput,
+    setFailed,
+} from '@actions/core'
+import { context } from '@actions/github'
+
+const appId = getInput('app-id')
+const workflowId = getInput('workflow-id')
+const token = getInput('token')
+
+const { ref, headRef } = context
+
+console.log(`ref: ${ref}, headRef: ${headRef}`)
+
+const branch = ref.split('refs/heads/')[1] || headRef
+
+const url = 'https://api.codemagic.io/builds'
+
+const payload = {
+    appId,
+    branch,
+    workflowId,
 }
+
+const headers = {
+    'x-auth-token': token,
+}
+
+axios.post(url, payload, { headers }).then(({ data }) => {
+    setOutput('build-id', data.buildId)
+}).catch(error => {
+    setFailed(error.message)
+})
 
