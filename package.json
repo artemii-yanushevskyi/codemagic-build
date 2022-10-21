@@ -1,6 +1,6 @@
 {
   "name": "codemagic-build",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Start a build on Codemagic from GitHub Actions",
   "main": "index.js",
   "repository": "git@github.com:artemii-yanushevskyi/codemagic-build.git",

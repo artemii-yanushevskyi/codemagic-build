@@ -16087,17 +16087,24 @@ const appId = (0,core.getInput)('app-id')
 const workflowId = (0,core.getInput)('workflow-id')
 const token = (0,core.getInput)('token')
 
-const { ref, headRef } = github.context
+let branch = null
+let tag = null
 
-console.log(`ref: ${ref}, headRef: ${headRef}`)
-
-const branch = ref.split('refs/heads/')[1] || headRef
+const { ref } = github.context
+const refType = github.context.ref_type
+if (refType === 'branch') {
+    const headRef = process.env.GITHUB_HEAD_REF
+    branch = ref.split('refs/heads/')[1] || headRef
+} else {
+    tag = ref.split('refs/tags/')[1]
+}
 
 const url = 'https://api.codemagic.io/builds'
 
 const payload = {
     appId,
     branch,
+    tag,
     workflowId,
 }
 
